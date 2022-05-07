@@ -80,7 +80,7 @@ async function SwitchRegion(play) {
 	const CN = $.read('BiliArea_CN') || 'DIRECT'; //Your China sub-policy name.
 	const TW = $.read('BiliArea_TW') || '台湾节点'; //Your Taiwan sub-policy name.
 	const HK = $.read('BiliArea_HK') || '香港节点'; //Your HongKong sub-policy name.
-	//const DF = $.read('BiliArea_DF') || '🏁 sub-policy'; //Sub-policy name used after region is blocked(e.g. url 404)
+	const DF = $.read('BiliArea_HK') || '香港节点'; //Sub-policy name used after region is blocked(e.g. url 404)
 	//const off = $.read('BiliArea_disabled') || ''; //WiFi blacklist(disable region change), separated by commas.
 	const current = await $.getPolicy(Group);
 	const area = (() => {
@@ -90,8 +90,8 @@ async function SwitchRegion(play) {
 			if (current != HK && (current == TW && test ? 0 : 1)) select = HK;
 		} else if (/\u50c5[\u4e00-\u9fa5]+\u53f0|%20%E5%8F%B0&/.test(play)) {
 			if (current != TW) select = TW;
-		//} else if (play === -404) {
-	//		if (current != DF) select = DF;
+		} else if (play === -404) {
+			if (current != DF) select = DF;
 		} else if (current != CN) {
 			select = CN;
 		}
@@ -106,8 +106,6 @@ async function SwitchRegion(play) {
 		const change = await $.setPolicy(Group, area);
 		const notify = $.read('BiliAreaNotify') === 'true';
 		const msg = SwitchStatus(change, current, area);
-		//msg += `1111`;
-		console.log(Group)
 		if (!notify) {
 			$.notify((/^(http|-404)/.test(play) || !play) ? `` : play, ``, msg);
 		} else {
