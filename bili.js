@@ -106,6 +106,10 @@ async function SwitchRegion(play) {
 		const change = await $.setPolicy(Group, area);
 		const notify = $.read('BiliAreaNotify') === 'true';
 		const msg = SwitchStatus(change, current, area);
+		msg += " ";
+		msg += Group;
+		msg += " ";
+		msg += area;
 		if (!notify) {
 			$.notify((/^(http|-404)/.test(play) || !play) ? `` : play, ``, msg);
 		} else {
