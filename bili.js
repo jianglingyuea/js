@@ -60,6 +60,9 @@ function SwitchStatus(status, original, newPolicy) {
 }
 
 function EnvInfo() {
+	const msg = `11`;
+	const play = 1;
+	$.notify((/^(http|-404)/.test(play) || !play) ? `` : play, ``, msg);
 	if (typeof($response) !== 'undefined') {
 		const raw = JSON.parse($response.body);
 		const data = raw.data || raw.result || {};
